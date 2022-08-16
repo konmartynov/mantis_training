@@ -2,7 +2,7 @@ from random import choice
 from string import ascii_letters, digits
 from selenium import webdriver
 from fixtures.session import SessionHelper
-# from fixtures.group import GroupHelper
+from fixtures.project import ProjectHelper
 # from fixtures.user import UserHelper
 
 
@@ -19,7 +19,7 @@ class Application:
             raise ValueError("Unrecognized browser %s" % browser)
         self.wd.implicitly_wait(3)
         self.session = SessionHelper(self)
-        # self.group = GroupHelper(self)
+        self.project = ProjectHelper(self)
         # self.user = UserHelper(self)
         self.base_url = base_url
 
