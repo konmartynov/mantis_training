@@ -14,9 +14,9 @@ class ProjectHelper:
     def create_new_project(self, project_name):
         wd = self.app.wd
         wd.find_element_by_xpath("//input[@value='Create New Project']").click()
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(project_name)
+        wd.find_element_by_name("name").click()
+        wd.find_element_by_name("name").clear()
+        wd.find_element_by_name("name").send_keys(project_name)
         wd.find_element_by_xpath("//input[@value='Add Project']").click()
 
     project_cache = None
@@ -25,14 +25,12 @@ class ProjectHelper:
         if self.project_cache is None:
             wd = self.app.wd
             self.project_cache = []
-            for element in wd.find_elements_by_xpath("//table[3]/tbody"):
-                cells = element.find_elements_by_tag_name("td")
-                # project_id = cells[0].find_element_by_css_selector("row-").get_attribute('href')
-                # project_ids = cells[0].find_element_by_tag_name("href").get_attribute('href')
-                # project_id = project_ids.split("?")
-                project_name = cells[0].find_element_by_tag_name("href").text
-                self.project_cache.append(Project(project_name=project_name))
-        return list(self.project_cache)
+            for element in wd.find_elements_by_xpath("//table[3]/tbody/tr"):
+                if element.get_attribute("class") not in ('', 'row-category'):
+                    cells = element.find_elements_by_tag_name("td")
+                    project_name = cells[0].text
+                    self.project_cache.append(Project(project_name=project_name))
+        return list(filter(None, self.project_cache))
 
     def delete_project_by_name(self, name):
         wd = self.app.wd
