@@ -14,8 +14,6 @@ class Project:
         return (self.project_id is None or other.project_id is None or self.project_id == other.project_id)\
                and self.project_name == other.project_name
 
-    def sort_by_id(self):
-        if self.project_id:
-            return int(self.project_id)
-        else:
-            return maxsize
+    def sort_by_name(self):
+        if self.project_name:
+            return str(self.project_name)

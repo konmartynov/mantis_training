@@ -10,4 +10,4 @@ def test_add_project(app):
     app.project.go_to_manage_projects()
     new_projects = app.project.get_project_list()
     old_projects.append(Project(project_name=r_str))
-    assert sorted(new_projects, key=Project.sort_by_id) == sorted(old_projects, key=Project.sort_by_id)
+    assert sorted(new_projects, key=Project.sort_by_name) == sorted(old_projects, key=Project.sort_by_name)
