@@ -1,3 +1,4 @@
+from sys import maxsize
 
 
 class Project:
@@ -16,3 +17,9 @@ class Project:
     def sort_by_name(self):
         if self.project_name:
             return self.project_name
+
+    def id_or_max(self):
+        if self.id:
+            return int(self.id)
+        else:
+            return maxsize
