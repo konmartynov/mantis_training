@@ -22,23 +22,19 @@ class ProjectHelper:
     project_cache = None
 
     def get_project_list(self):
-        if self.project_cache is None:
-            wd = self.app.wd
-            self.project_cache = []
-            for element in wd.find_elements_by_xpath("//table[3]/tbody/tr"):
-                if element.get_attribute("class") not in ('', 'row-category'):
-                    cells = element.find_elements_by_tag_name("td")
-                    project_name = cells[0].text
-                    self.project_cache.append(Project(project_name=project_name))
-        return list(filter(None, self.project_cache))
+        wd = self.app.wd
+        self.go_to_manage_projects()
+        project_list = []
+        for element in wd.find_elements_by_xpath("//table[3]/tbody/tr"):
+            if element.get_attribute("class") not in ('', 'row-category'):
+                cells = element.find_elements_by_tag_name("td")
+                project_name = cells[0].text
+                project_list.append(Project(project_name=project_name))
+        return list(filter(None, project_list))
 
     def delete_project_by_name(self, name):
         wd = self.app.wd
-        for element in wd.find_elements_by_name("entry"):
-            cells = element.find_elements_by_tag_name("td")
-            cell_name = cells[0].find_element_by_tag_name("href").text
-            if cell_name == name:
-                cells[0].click()
-                break
+        wd.find_element_by_xpath("//a[contains(text(),'" + name + "')]").click()
         wd.find_element_by_xpath("//input[@value='Delete Project']").click()
-        wd.find_element_by_xpath("//input[@value='Delete Project']").click()
+        wd.find_element_by_css_selector("input.button").click()
+        self.project_cash = None

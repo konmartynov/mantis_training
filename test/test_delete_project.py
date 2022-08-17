@@ -7,7 +7,7 @@ def test_delete_some_project(app):
         r_str = app.gen_random_string()
         project = Project(project_name=r_str)
         app.project.go_to_manage_projects()
-        app.project.create_new_project(project)
+        app.project.create_new_project(project.project_name)
     app.project.go_to_manage_projects()
     old_projects = app.project.get_project_list()
     project = random.choice(old_projects)
