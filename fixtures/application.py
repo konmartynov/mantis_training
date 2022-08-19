@@ -7,11 +7,12 @@ from fixtures.james import JamesHelper
 from fixtures.signup import SignupHelper
 from fixtures.mail import MailHelper
 from fixtures.soap import SoapHelper
+from models.credentials import Credentials
 
 
 class Application:
 
-    def __init__(self, browser, config):
+    def __init__(self, browser, config, credentials: Credentials):
         if browser == "firefox":
             self.wd = webdriver.Firefox()
         elif browser == "chrome":
@@ -29,6 +30,7 @@ class Application:
         self.soap = SoapHelper(self)
         self.config = config
         self.base_url = config['web']['baseUrl']
+        self.credentials = credentials
 
     def is_valid(self):
         try:

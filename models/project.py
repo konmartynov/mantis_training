@@ -19,7 +19,7 @@ class Project:
             return self.project_name
 
     def id_or_max(self):
-        if self.id:
-            return int(self.id)
+        if self.project_id:
+            return int(self.project_id)
         else:
             return maxsize
